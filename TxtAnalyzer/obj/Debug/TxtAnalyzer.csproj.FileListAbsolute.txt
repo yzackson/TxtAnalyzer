@@ -1,0 +1,11 @@
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\bin\Debug\TxtAnalyzer.exe.config
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\bin\Debug\TxtAnalyzer.exe
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\bin\Debug\TxtAnalyzer.pdb
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.csproj.AssemblyReference.cache
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.csproj.SuggestedBindingRedirects.cache
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.Form1.resources
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.Properties.Resources.resources
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.csproj.GenerateResource.cache
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.csproj.CoreCompileInputs.cache
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.exe
+C:\Dev\Faculdade\TxtAnalyzer\TxtAnalyzer\TxtAnalyzer\obj\Debug\TxtAnalyzer.pdb
