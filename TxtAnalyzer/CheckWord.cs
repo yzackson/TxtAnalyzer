@@ -9,43 +9,15 @@ using System.Windows.Forms;
 
 namespace TxtAnalyzer
 {
-    class CheckWord
+    public static class CheckWord
     {
-        private String[] AllText;
-        private Hashtable Dictionary = new Hashtable();
-        public String DictPath;
+        private static String[] AllText;
+        public static String[] NotInDictionary = new String[1000];
 
-        // Event to get new dict
-        public event EventHandler<String> GetNewDict;
-
-        // set path to new
-        public void SetDictPath(String path)
-        {
-            if (DictPath != path)
-            {
-                DictPath = path;
-                OnDictPathChenged();
-            }
-        }
-
-        // Method to be called when path change
-        protected virtual void OnDictPathChenged()
-        {
-            GetNewDict?.Invoke(this, this.DictPath);
-        }
-
-        // Import new dictionary
-        public void UpdateDictionary(object sender, String path)
-        {
-            String _dict = File.ReadAllText(path, Encoding.UTF8);
-            foreach (string word in _dict.Split(','))
-            {
-                Dictionary.Add(word.ToLower(), true);
-            }
-        }
+        
 
         // Set the current text took of the textbox
-        public async Task SetAllText(TextBox text)
+        public static async Task SetAllText(TextBox text)
         {
             Task<String[]> Text = Task.Run(() =>
             {
@@ -57,23 +29,85 @@ namespace TxtAnalyzer
             await Text.ContinueWith(t =>
             {
                 AllText = t.Result;
-                CheckAllTextInDict();
+                CheckWordInDict(AllText[(AllText.Length - 1)]);
             });
         }
 
-        // Check if all the text got of the textbox is in dictionary
-        private async Task CheckAllTextInDict()
+        // Check if all the text got from the textbox is in dictionary
+        public static async Task CheckAllTextInDict()
         {
+            NotInDictionary = new String[1000];
+
             await Task.Run(() =>
             {
-                foreach (String word in AllText)
+                foreach (string w in AllText)
                 {
-                    if (!Dictionary.Contains(word))
+                    String word = w.ToLower();
+
+                    byte[] c = Encoding.ASCII.GetBytes(word.Substring(0, 1));
+
+                    if(Dictionary.Dict[c[0], Dictionary.TabelaHash.GetHash(word)] == null)
                     {
-                        Dictionary.Add(word, false);
+                        // adiciona na ultima posição 
+                        for(int i = 0; i < NotInDictionary.Length; i++)
+                        {
+                            if (NotInDictionary[i] == null)
+                            {
+                                NotInDictionary[i] = word;
+                                break;
+                            }
+                        }
                     }
                 }
             });
+        }
+
+        private static async Task CheckWordInDict(String word)
+        {
+            await Task.Run(() =>
+            {
+                word = word.ToLower();
+
+                byte[] c = Encoding.ASCII.GetBytes(word.Substring(0, 1));
+
+                if (Dictionary.Dict[c[0], Dictionary.TabelaHash.GetHash(word)] == null)
+                {
+                    // adiciona na ultima posição 
+                    for (int i = 0; i < NotInDictionary.Length; i++)
+                    {
+                        if (NotInDictionary[i] == null)
+                        {
+                            NotInDictionary[i] = word;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
+
+        public static void UpdateDictionary(String[] NewDictionary)
+        {
+            for (int i = 0; i < NewDictionary.Length; i++)
+            {
+                if (NotInDictionary[i] != null)
+                {
+                    //Dictionary.Add(word.ToLower(), true);
+                    String word = NotInDictionary[i].ToLower();
+
+                    byte[] c = Encoding.ASCII.GetBytes(word.Substring(0, 1));
+
+                    Dictionary.Dict[c[0], Dictionary.TabelaHash.GetHash(word)] = word;
+
+                    NotInDictionary[i] = null;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            Dictionary.SaveDictionary();
         }
     }
 }
